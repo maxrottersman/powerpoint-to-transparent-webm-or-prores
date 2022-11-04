@@ -1,11 +1,11 @@
-# Powerpoint to WebM Transparent Video
-Exports slides as transparent webm or mov files for obs, youtube, or other streaming
+# Powerpoint to WebM or ProRes 4444 Transparent Video
+Exports slides as transparent webm or mov files for obs, Premiere, Resolve Youtube, or other streaming
 
 How it works
-1. A graphic is placed on a slide with the background color set to solid green 0x00FF00 or blue 0x00000FF
-2. The graphic is animated (if desired)
-3. It is exported as a 4K MP4 video (MOV works too, though I see no difference)
-4. The MP4 video is then converted to a WebM video file using FFMPEG
+1. Graphics are placed on a slide with the background color set to solid green 0x00FF00 or blue 0x00000FF
+2. The graphics areanimated (if desired)
+3. Each desired slide is exported as a 4K MP4 video 
+4. The MP4 video is then converted to and/or a WebM/VP9 or ProRes 4444 video file using FFMPEG
 
 ## Installation
 Install FFMPEG
@@ -17,11 +17,21 @@ Also set folders for which to place MP4 and WebM exports
 ## Known Issues
 There is green or blue fringing around graphics that have shadows or motion, etc. Best to pick the background color that you will mind the least, if this is an issue.  I've tried some ffmpeg tricks to fix this but no luck.  Hopefully someone can solve.
 
-## Basic/Current FFMPEG params
-"file.mp4" -b:v 2M -vf "chromakey=0x00FF00:.20:.15,format=rgba,scale=1920x1080" -c:v libvpx-vp9 -auto-alt-ref 0 "ouput.webm"
+Generate ffmpeg command *** WEBM / VP9 ***
 
-For ProRes, Davinci Resolve won't work with WebM, currently (i'm sure this could be improved)
-" file.mp4" -c:v qtrle -vf "chromakey=0x00FF00:.2:.15,format=rgba,scale=1920x1080" "output.mov"
+sFFMPEG_config_webm = " -b:v 2M -vf " & Chr(34) & _
+ "chromakey=" & sHEXColor & ":" & _
+ sChromaSimilarity & ":" & _
+ sChromaBlend & ",format=rgba,scale=" & txt_output_scale & Chr(34) & _
+ " -c:v libvpx-vp9 -auto-alt-ref 0 -y "
+
+Generate ffmpeg command *** MOV 4444 with Alpha ***
+sFFMPEG_config_mov4444 = " -c:v prores_ks -profile:v 4 -vendor apl0 -bits_per_mb 8000  -vf " & Chr(34) & _
+ "chromakey=" & sHEXColor & ":" & _
+ sChromaSimilarity & ":" & _
+ sChromaBlend & ",format=rgba,scale=" & txt_output_scale & Chr(34) & _
+ " -pix_fmt yuva444p10le "![image](https://user-images.githubusercontent.com/512477/200072982-881a4405-a507-4154-9c9e-e5d017059c01.png)
+
 
 My YouTube is "Maxotics".  I can also be reached at maxotics.com
 
