@@ -1,5 +1,5 @@
 # Powerpoint to WebM or ProRes 4444 Transparent Video
-Exports slides as transparent webm or mov files for obs, Premiere, Resolve Youtube, or other streaming
+Exports slides as transparent webm or mov files for obs, Kdenlive, Premiere, Resolve Youtube, or other video editors or streaming solutions.
 
 How it works
 1. Graphics are placed on a slide with the background color set to solid green 0x00FF00 or blue 0x00000FF
